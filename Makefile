@@ -76,13 +76,11 @@ test: test_init test_run
 test_init:
 	docker-compose run --rm php-fpm php artisan key:generate --env=testing -n
 	docker-compose run --rm php-fpm php artisan migrate -n --env=testing -n
-	docker-compose run --rm php-fpm php artisan db:seed --class="Database\Seeders\DatabaseTestSeeder" --env=testing -n
-	docker-compose run --rm php-fpm php artisan am:create-admin -n --env=testing -n
-
+	#docker-compose run --rm php-fpm php artisan db:seed --class="Database\Seeders\DatabaseTestSeeder" --env=testing -n
 
 test_refresh_db:
 	docker-compose run --rm php-fpm php artisan migrate:fresh --seed -n --env=testing -n
-	docker-compose run --rm php-fpm php artisan am:create-admin -n --env=testing -n
+	#docker-compose run --rm php-fpm php artisan am:create-admin -n --env=testing -n
 
 test_run:
 	docker-compose run --rm php-fpm ./vendor/bin/phpunit

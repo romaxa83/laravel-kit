@@ -1,9 +1,10 @@
-# Стартовый пакет для Laravel (заточенно под серверное API)
+# Стартовый пакет для Laravel (заточено под серверное API)
 
 [![PHP](https://img.shields.io/badge/php-%5E8.1-blue)](https://www.php.net/)
 [![Framework](https://img.shields.io/badge/laravel-9-red)](https://laravel.com/docs/8.x)
 [![Database](https://img.shields.io/badge/mysql-8-green)](https://dev.mysql.com/doc/refman/8.0/en/)
 [![Cache](https://img.shields.io/badge/cache-redis-yellow)](https://redis.io/)
+[![Auth](https://img.shields.io/badge/auth-sanctum-brown)](https://github.com/romaxa83/lara-docs/blob/9.x/docs/sanctum.md)
 
 <!-- Deployment -->
 ### Разворачивание проекта
@@ -28,4 +29,13 @@ $ make down
 
 // информаци по контейнерам и проекту
 $ make info
+
+// настраивает тестовое окружение и запускает тесты
+$ make test
+// настраивает тестовое окружение
+$ make test_init
+// запустить тесты
+$ make test_run
+// обновляет тестовую бд
+$ make test_refresh_db
 ```
