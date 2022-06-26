@@ -13,6 +13,7 @@ Route::get('info', function(Request $request){
 //   ]);
 });
 
+Route::post('sign-up', [Auth\AuthController::class, 'signUp'])->name('api.v1.sign-up');
 Route::post('login', [Auth\AuthController::class, 'login'])->name('api.v1.login');
 
 Route::middleware('auth:sanctum')->group(function () {

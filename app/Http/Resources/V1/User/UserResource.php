@@ -2,22 +2,23 @@
 
 namespace App\Http\Resources\V1\User;
 
+use App\Http\Resources\BaseResource;
 use App\Models\User\User;
-use Illuminate\Http\Resources\Json\JsonResource;
 
-class UserResource extends JsonResource
+class UserResource extends BaseResource
 {
     public function toArray($request): array
     {
         /** @var User $user */
         $user = $this;
-
+//        $format =
+//dd($user->email);
         return [
             'id' => $user->id,
             'name' => $user->name,
-            'email' => $user->email,
-            'created' => $user->created_at,
-            'updated' => $user->updated_at
+            'email' => $user->email->getValue(),
+            'created' => $user->created_at->format($this->dateFormat),
+            'updated' => $user->updated_at->format($this->dateFormat)
         ];
     }
 }

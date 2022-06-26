@@ -75,12 +75,13 @@ class Handler extends ExceptionHandler
 
             // при ошибки валидации формируем массив ошибок
             if($exception instanceof  ValidationException){
-                $message = [];
-                foreach ($exception->errors() as $errors){
-                    foreach($errors as $mes){
-                        $message[] = $mes;
-                    }
-                }
+//                $message = [];
+//                foreach ($exception->errors() as $errors){
+//                    foreach($errors as $mes){
+//                        $message[] = $mes;
+//                    }
+//                }
+                return ApiController::errorJsonMessage($exception->getMessage(), Response::HTTP_BAD_REQUEST);
             }
 
             return ApiController::errorJsonMessage($message);
