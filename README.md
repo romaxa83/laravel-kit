@@ -14,6 +14,7 @@
 
 ```sh
 $ cp .env.example .env
+$ cp .env.testing.example .env.testing
 $ make init
 ```
 <!-- Commands -->

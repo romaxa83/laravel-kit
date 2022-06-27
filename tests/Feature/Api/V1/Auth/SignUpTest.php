@@ -4,7 +4,7 @@ namespace Tests\Feature\Api\V1\Auth;
 
 use App\Models\User\User;
 use Carbon\CarbonImmutable;
-use Illuminate\Foundation\Testing\DatabaseTransactions;;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\Builder\User\UserBuilder;
 use Tests\TestCase;
 use Illuminate\Http\Response;

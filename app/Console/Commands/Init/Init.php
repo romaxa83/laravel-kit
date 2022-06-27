@@ -13,6 +13,7 @@ class Init extends Command
     public function handle()
     {
         $this->call('app:create-admin');
+        $this->call('app:set-langs');
     }
 }
 

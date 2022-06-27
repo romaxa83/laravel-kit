@@ -3,7 +3,7 @@
 namespace Tests\Feature\Api\V1\Auth;
 
 use App\Models\User\User;
-use Illuminate\Foundation\Testing\DatabaseTransactions;;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\Builder\User\UserBuilder;
 use Tests\TestCase;
 use Illuminate\Http\Response;
@@ -32,7 +32,7 @@ class LoginTest extends TestCase
         $user = $this->userBuilder->setPassword($password)->create();
 
         $this->postJson(route('api.v1.login'), [
-            'email' => $user->email,
+            'email' => $user->email->getValue(),
             'password' => $password
         ])
             ->assertStatus(Response::HTTP_OK)
@@ -49,7 +49,7 @@ class LoginTest extends TestCase
         $user = $this->userBuilder->setPassword($password)->create();
 
         $this->postJson(route('api.v1.login'), [
-            'email' => $user->email,
+            'email' => $user->email->getValue(),
             'password' => 'wrong_password'
         ])
             ->assertStatus(Response::HTTP_BAD_REQUEST)
