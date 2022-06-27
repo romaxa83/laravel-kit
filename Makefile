@@ -63,7 +63,7 @@ project-init:
 	docker-compose run --rm php-fpm php artisan db:seed
 	#docker-compose run --rm php-fpm php artisan passport:keys
 	docker-compose run --rm php-fpm php artisan app:init
-	docker-compose run --rm php-fpm composer ide
+#	docker-compose run --rm php-fpm composer ide
 
 perm:
 	sudo chmod 777 -R storage

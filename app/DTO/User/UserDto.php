@@ -2,11 +2,14 @@
 
 namespace App\DTO\User;
 
+use App\ValueObjects\Email;
+use App\ValueObjects\Password;
+
 class UserDto
 {
     public $name;
-    public $email;
-    public $password;
+    public Email $email;
+    public Password $password;
 
     private function __construct()
     {}
@@ -16,8 +19,8 @@ class UserDto
         $self = new self();
 
         $self->name = $args['name'];
-        $self->email = $args['email'];
-        $self->password = $args['password'];
+        $self->email = new Email($args['email']);
+        $self->password = new Password($args['password'] ?? null);
 
         return $self;
     }
