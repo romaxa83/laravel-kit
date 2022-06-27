@@ -69,6 +69,12 @@ perm:
 	sudo chmod 777 -R storage
 
 #======================================
+# Generate
+generate:
+	@echo Generate api documentaion
+	docker-compose run --rm php-fpm php artisan l5-swagger:generate
+
+#======================================
 # Test Command
 
 test: test_init test_run
@@ -93,6 +99,7 @@ info_domen:
 	echo '------------------------------';
 	echo '[x] DEV-----------------------';
 	echo ${APP_URL};
+	echo ${APP_URL}'/api/documentation';
 	echo '------------------------------';
 
 .DEFAULT_GOAL := init
