@@ -69,13 +69,20 @@ perm:
 	sudo chmod 777 -R storage
 
 #======================================
+# Generate
+generate:
+	@echo Generate api documentaion
+	docker-compose run --rm php-fpm php artisan l5-swagger:generate
+
+#======================================
 # Test Command
 
 test: test_init test_run
 
 test_init:
-	docker-compose run --rm php-fpm php artisan key:generate --env=testing -n
-	docker-compose run --rm php-fpm php artisan migrate -n --env=testing -n
+	docker-compose run --rm php-fpm php artisan key:generate --env=testing
+	docker-compose run --rm php-fpm php artisan migrate -n --env=testing
+	docker-compose run --rm php-fpm php artisan app:init -n --env=testing
 	#docker-compose run --rm php-fpm php artisan db:seed --class="Database\Seeders\DatabaseTestSeeder" --env=testing -n
 
 test_refresh_db:
@@ -92,6 +99,7 @@ info_domen:
 	echo '------------------------------';
 	echo '[x] DEV-----------------------';
 	echo ${APP_URL};
+	echo ${APP_URL}'/api/documentation';
 	echo '------------------------------';
 
 .DEFAULT_GOAL := init

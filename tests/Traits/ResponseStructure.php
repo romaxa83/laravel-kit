@@ -20,8 +20,15 @@ trait ResponseStructure
         ];
     }
 
-    public function structure(): array
+    public function structure($data = []): array
     {
+        if(!empty($data)){
+            return [
+                "data" => [$data],
+                "success",
+            ];
+        }
+
         return [
             "data",
             "success",

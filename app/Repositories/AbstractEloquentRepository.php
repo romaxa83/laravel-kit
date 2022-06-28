@@ -2,10 +2,16 @@
 
 namespace App\Repositories;
 
+use App\Traits\PresenceTrait;
+use EloquentFilter\Filterable;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\Response;
 
 abstract class AbstractEloquentRepository
 {
+    use PresenceTrait;
+
     public function __construct()
     {}
 
@@ -21,9 +27,48 @@ abstract class AbstractEloquentRepository
         return $this->query()->where($field, $value)->exists();
     }
 
-    public function getBy($field, $value)
+    public function getBy(
+        $field,
+        $value,
+        bool $throwException = false,
+        string $messageException = "",
+    )
     {
-        return $this->query()->where($field, $value)->first();
+        $q = $this->query()->where($field, $value)->first();
+
+        if($throwException && $q == null){
+            if(!$messageException && "" == $messageException){
+                $messageException = "Model [{$this->modelClass()}] not found by [{$field} = {$value}]";
+            }
+            throw new \DomainException($messageException, Response::HTTP_NOT_FOUND);
+        }
+
+        return $q;
     }
+
+    public function all(
+        array $relations = [],
+        array $filters = [],
+        array $orders = [],
+    ): Collection
+    {
+        $q = $this->query()
+            ->with($relations)
+        ;
+
+        if($this->checkPresenceTrait($this->modelClass(), Filterable::class)){
+            $q->filter($filters);
+        }
+
+        if(!empty($orders)){
+            foreach ($orders as $field => $type) {
+                $q->orderBy($field, $type);
+            }
+        }
+
+        return $q->get();
+    }
+
+
 }
 

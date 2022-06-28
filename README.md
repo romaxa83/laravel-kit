@@ -5,6 +5,7 @@
 [![Database](https://img.shields.io/badge/mysql-8-green)](https://dev.mysql.com/doc/refman/8.0/en/)
 [![Cache](https://img.shields.io/badge/cache-redis-yellow)](https://redis.io/)
 [![Auth](https://img.shields.io/badge/auth-sanctum-brown)](https://github.com/romaxa83/lara-docs/blob/9.x/docs/sanctum.md)
+[![Api docs](https://img.shields.io/badge/api_docs-swagger_3-green)](https://github.com/DarkaOnLine/L5-Swagger)
 
 <!-- Deployment -->
 ### Разворачивание проекта
@@ -14,6 +15,7 @@
 
 ```sh
 $ cp .env.example .env
+$ cp .env.testing.example .env.testing
 $ make init
 ```
 <!-- Commands -->
@@ -29,6 +31,9 @@ $ make down
 
 // информаци по контейнерам и проекту
 $ make info
+
+// генерация api документации
+$ make generate
 
 // настраивает тестовое окружение и запускает тесты
 $ make test

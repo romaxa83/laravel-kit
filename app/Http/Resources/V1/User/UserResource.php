@@ -9,16 +9,15 @@ class UserResource extends BaseResource
 {
     public function toArray($request): array
     {
-        /** @var User $user */
-        $user = $this;
-//        $format =
-//dd($user->email);
+        /** @var User $model */
+        $model = $this;
+
         return [
-            'id' => $user->id,
-            'name' => $user->name,
-            'email' => $user->email->getValue(),
-            'created' => $user->created_at->format($this->dateFormat),
-            'updated' => $user->updated_at->format($this->dateFormat)
+            'id' => $model->id,
+            'name' => $model->name,
+            'email' => $model->email->getValue(),
+            'created' => $model->created_at->format($this->dateFormat),
+            'updated' => $model->updated_at->format($this->dateFormat)
         ];
     }
 }

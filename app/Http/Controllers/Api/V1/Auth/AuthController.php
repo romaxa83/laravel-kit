@@ -20,7 +20,9 @@ class AuthController extends ApiController
         protected UserRepository $userRepository,
         protected UserService $userService,
     )
-    {}
+    {
+        parent::__construct();
+    }
 
     public function signUp(SignUpRequest $request): JsonResponse
     {
