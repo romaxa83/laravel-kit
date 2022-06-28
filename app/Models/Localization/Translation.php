@@ -6,10 +6,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- *
  * @property int $id
  * @property string $place
- * @property string $key
+ * @property string|null $key
  * @property string $text
  * @property string $lang
  * @property string|null $entity_type
@@ -24,6 +23,9 @@ class Translation extends Model
 
     const TABLE = 'translations';
     protected $table = self::TABLE;
+
+    const PLACE_APP = 'app';
+    const PLACE_SYS = 'sys';
 
 //    public static function getLanguage(): array
 //    {

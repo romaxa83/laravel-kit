@@ -66,6 +66,5 @@ class OneTest extends TestCase
             ->assertJson($this->structureErrorResponse("some exception message"))
         ;
     }
-
 }
 

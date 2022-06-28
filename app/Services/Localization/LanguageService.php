@@ -4,8 +4,9 @@ namespace App\Services\Localization;
 
 use App\DTO\Localization\LanguageDto;
 use App\Models\Localization\Language;
+use App\Services\AbstractService;
 
-class LanguageService
+class LanguageService extends AbstractService
 {
     public function create(LanguageDto $dto): Language
     {

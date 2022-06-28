@@ -22,6 +22,10 @@ Route::get('languages', [Localization\LanguageController::class, 'list'])
     ->name('api.v1.languages.list');
 Route::get('languages/{id}', [Localization\LanguageController::class, 'one'])
     ->name('api.v1.languages.one');
+Route::put('languages/{id}/toggle-active', [Localization\LanguageController::class, 'toggleActive'])
+    ->name('api.v1.languages.toggle-active');
+Route::get('translations', [Localization\TranslationController::class, 'setTranslation'])
+    ->name('api.v1.set-translation');
 
 Route::middleware('auth:sanctum')->group(function () {
 

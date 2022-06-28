@@ -98,7 +98,7 @@ class LanguageController extends ApiController
      *     security={{"Basic": {}}},
      *
      *     @OA\Parameter(name="{id}", in="path", required=true,
-     *          description="ID зыка",
+     *          description="ID языка",
      *          @OA\Schema(type="integer", example=2)
      *     ),
      *
@@ -122,6 +122,45 @@ class LanguageController extends ApiController
                     $this->repo->getBy('id', $id, true)
                 )
         );
+        } catch (\Throwable $e){
+            return static::errorJsonMessage($e->getMessage(), $e->getCode());
+        }
+    }
+
+    /**
+     * @OA\Put (
+     *     path="/api/v1/languages/{id}/toggle-active",
+     *     tags = {"Localization"},
+     *     summary="Активация/деактивация языка",
+     *     security={{"Basic": {}}},
+     *
+     *     @OA\Parameter(name="{id}", in="path", required=true,
+     *          description="ID языка",
+     *          @OA\Schema(type="integer", example=2)
+     *     ),
+     *
+     *     @OA\Response(response="200", description="Запрашиваемая локаль",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="data", title="Data", type="object",
+     *                   ref="#/components/schemas/LanguageResource"
+     *              ),
+     *              @OA\Property(property="success", title="Success", example=true),
+     *         ),
+     *     ),
+     *
+     *     @OA\Response(response="400", description="Error", @OA\JsonContent(ref="#/components/schemas/ErrorResponse")),
+     * )
+     */
+    public function toggleActive($id): JsonResponse
+    {
+        try {
+            $model = $this->service->toggleActive(
+                $this->repo->getBy('id', $id, true)
+            );
+
+            return static::successJsonMessage(
+                LanguageResource::make($model)
+            );
         } catch (\Throwable $e){
             return static::errorJsonMessage($e->getMessage(), $e->getCode());
         }

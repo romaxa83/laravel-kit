@@ -3,6 +3,7 @@
 namespace App\Models\Localization;
 
 use App\ModelFilters\Localization\LanguageFilter;
+use App\Traits\ActiveTrait;
 use EloquentFilter\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -21,6 +22,7 @@ class Language extends Model
 {
     use HasFactory;
     use Filterable;
+    use ActiveTrait;
 
     public $timestamps = false;
 
@@ -35,6 +37,11 @@ class Language extends Model
     public function modelFilter()
     {
         return $this->provideFilter(LanguageFilter::class);
+    }
+
+    public function isActive(): bool
+    {
+        return $this->active;
     }
 }
 
