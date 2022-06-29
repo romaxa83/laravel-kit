@@ -18,13 +18,21 @@ Route::post('sign-up', [Auth\AuthController::class, 'signUp'])->name('api.v1.sig
 Route::post('login', [Auth\AuthController::class, 'login'])->name('api.v1.login');
 
 // Localization
+
+//Route::controller(Localization\LanguageController::class)->group(function (){
+//    Route::get('languages', 'list')->name('api.v1.languages.list');
+//    Route::get('languages/{id}', 'one')->name('api.v1.languages.one');
+//    Route::put('languages/{id}/toggle-active', 'toggleActive')->name('api.v1.languages.toggle-active');
+//});
+
 Route::get('languages', [Localization\LanguageController::class, 'list'])
     ->name('api.v1.languages.list');
 Route::get('languages/{id}', [Localization\LanguageController::class, 'one'])
     ->name('api.v1.languages.one');
 Route::put('languages/{id}/toggle-active', [Localization\LanguageController::class, 'toggleActive'])
     ->name('api.v1.languages.toggle-active');
-Route::get('translations', [Localization\TranslationController::class, 'setTranslation'])
+
+Route::post('translations', [Localization\TranslationController::class, 'setTranslation'])
     ->name('api.v1.set-translation');
 
 Route::middleware('auth:sanctum')->group(function () {

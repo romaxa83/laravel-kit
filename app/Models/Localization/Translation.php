@@ -14,12 +14,13 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $entity_type
  * @property int|null $entity_id
  * @property string|null $group
- *
  */
 
 class Translation extends Model
 {
     use HasFactory;
+
+    public $timestamps = false;
 
     const TABLE = 'translations';
     protected $table = self::TABLE;

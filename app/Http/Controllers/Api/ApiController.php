@@ -73,6 +73,10 @@ class ApiController extends Controller
 
     public static function errorJsonMessage($message, $code = Response::HTTP_INTERNAL_SERVER_ERROR)
     {
+        if($code == 0){
+            $code = Response::HTTP_INTERNAL_SERVER_ERROR;
+        }
+
         return response()->json([
             'data' => $message,
             'success' => false
