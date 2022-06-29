@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Traits\ActiveTrait;
 use App\Traits\PresenceTrait;
 use EloquentFilter\Filterable;
 use Illuminate\Database\Eloquent\Builder;
@@ -69,6 +70,18 @@ abstract class AbstractEloquentRepository
         return $q->get();
     }
 
+    public function forSelect(
+        string $field,
+        string $key,
+    ): \Illuminate\Support\Collection
+    {
+        $q = $this->query();
 
+        if($this->checkPresenceTrait($this->modelClass(), ActiveTrait::class)){
+            $q->active();
+        }
+
+        return $q->toBase()->get()->pluck($field, $key);
+    }
 }
 

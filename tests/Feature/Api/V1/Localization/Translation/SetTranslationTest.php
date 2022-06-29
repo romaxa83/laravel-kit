@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Api\V1\Localization\Translation;
 
+use App\Models\Common\Hash;
 use App\Models\Localization\Translation;
 use App\Services\Localization\TranslationService;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -54,10 +55,20 @@ class SetTranslationTest extends TestCase
             ])->first()
         );
 
-        $this->postJson(route('api.v1.set-translation'), $data)
-            ->assertJson($this->structureSuccessResponse(__('message.translate_set')))
+        $this->assertNull(Hash::query()->where('key', Hash::KEY_APP_TRANSLATION)->first());
+
+        $res = $this->postJson(route('api.v1.set-translation'), $data)
             ->assertStatus(Response::HTTP_OK)
         ;
+
+        $this->assertNotNull($modelHash = Hash::query()->where('key', Hash::KEY_APP_TRANSLATION)->first());
+        $hash = Hash::generate(
+            Translation::query()->select(['text', 'lang'])
+                ->whereIn('place', [Translation::PLACE_APP])->toBase()->get()
+        );
+
+        $this->assertEquals($hash, $res->json('data'));
+        $this->assertEquals($hash, $modelHash->hash);
 
         $t_1 = Translation::query()->where([
             ['key', 'button'],
@@ -112,10 +123,22 @@ class SetTranslationTest extends TestCase
             ])->first()
         );
 
-        $this->postJson(route('api.v1.set-translation'), $data)
-            ->assertJson($this->structureSuccessResponse(__('message.translate_set')))
+        $hashOld = Hash::generate(
+            Translation::query()->select(['text', 'lang'])
+                ->whereIn('place', [Translation::PLACE_APP])->toBase()->get()
+        );
+
+        $res =  $this->postJson(route('api.v1.set-translation'), $data)
             ->assertStatus(Response::HTTP_OK)
         ;
+
+        $hashNew = Hash::generate(
+            Translation::query()->select(['text', 'lang'])
+                ->whereIn('place', [Translation::PLACE_APP])->toBase()->get()
+        );
+
+        $this->assertNotEquals($hashOld, $res->json('data'));
+        $this->assertEquals($hashNew, $res->json('data'));
 
         $t_1->refresh();
         $t_2->refresh();
@@ -153,7 +176,6 @@ class SetTranslationTest extends TestCase
         unset($data['button']['ua']);
 
         $this->postJson(route('api.v1.set-translation'), $data)
-            ->assertJson($this->structureSuccessResponse(__('message.translate_set')))
             ->assertStatus(Response::HTTP_OK)
         ;
 
@@ -175,8 +197,13 @@ class SetTranslationTest extends TestCase
         $this->assertNotEquals($t_1->text, data_get($data, 'button.en'));
         $this->assertNotEquals($t_2->text, data_get($data, 'button.ua'));
 
+        $hash = Hash::generate(
+            Translation::query()->select(['text', 'lang'])
+                ->whereIn('place', [Translation::PLACE_APP])->toBase()->get()
+        );
+
         $this->postJson(route('api.v1.set-translation'), [])
-            ->assertJson($this->structureSuccessResponse(__('message.translate_set')))
+            ->assertJson($this->structureSuccessResponse($hash))
             ->assertStatus(Response::HTTP_OK)
         ;
 

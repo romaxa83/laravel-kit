@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Localization\Language;
 use App\Models\Localization\Translation;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;

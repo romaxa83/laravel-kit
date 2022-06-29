@@ -13,7 +13,7 @@ class Hash extends Model
 {
     public $timestamps = false;
 
-    const TABLE = 'languages';
+    const TABLE = 'hashes';
     protected $table = self::TABLE;
 
     const KEY_APP_TRANSLATION = 'translation.app';
@@ -22,5 +22,14 @@ class Hash extends Model
         'key',
         'hash',
     ];
+
+    public static function generate(array|string $data): string
+    {
+        if(is_string($data) || is_numeric($data)){
+            return md5($data);
+        }
+
+        return md5(json_encode($data));
+    }
 }
 

@@ -27,6 +27,10 @@ use Illuminate\Http\Response;
  *     name="Localization",
  *     description="Локализация",
  * )
+ * @OA\Tag(
+ *     name="Common",
+ *     description="Общие методы",
+ * )
  * @OA\Server(
  *     description="stage server",
  *     url="http://jddemo.wezom.agency/api"

@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\Auth;
 use App\Http\Controllers\Api\V1\Localization;
+use App\Http\Controllers\Api\V1\Common;
 
 Route::get('info', function(Request $request){
     return phpinfo();
@@ -34,6 +35,11 @@ Route::put('languages/{id}/toggle-active', [Localization\LanguageController::cla
 
 Route::post('translations', [Localization\TranslationController::class, 'setTranslation'])
     ->name('api.v1.set-translation');
+Route::get('translations', [Localization\TranslationController::class, 'getTranslation'])
+    ->name('api.v1.get-translation');
+
+Route::get('hash/{key}', [Common\HashController::class, 'getHash'])
+    ->name('api.v1.get-hash');
 
 Route::middleware('auth:sanctum')->group(function () {
 
