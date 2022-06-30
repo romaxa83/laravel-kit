@@ -40,6 +40,8 @@ Route::get('translations', [Localization\TranslationController::class, 'getTrans
 
 Route::get('hash/{key}', [Common\HashController::class, 'getHash'])
     ->name('api.v1.get-hash');
+Route::get('hash/{key}/{hash}', [Common\HashController::class, 'checkHash'])
+    ->name('api.v1.check-hash');
 
 Route::middleware('auth:sanctum')->group(function () {
 

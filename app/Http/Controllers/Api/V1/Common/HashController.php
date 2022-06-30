@@ -49,6 +49,46 @@ class HashController extends ApiController
             return self::errorJsonMessage($e->getMessage(), $e->getCode());
         }
     }
+
+    /**
+     * @OA\Get (
+     *     path="/api/v1/hash/{key}/{hash}",
+     *     tags={"Common"},
+     *     summary="Проверить хеш по ключа",
+     *     description="Проверить хеш по ключа",
+     *
+     *     @OA\Parameter(name="{key}", in="path", required=true,
+     *          description="Ключ хеша",
+     *          @OA\Schema(type="string", example="translation.app",
+     *              enum={"translation.app"},
+     *          )
+     *     ),
+     *     @OA\Parameter(name="{hash}", in="path", required=true,
+     *          description="Хеш",
+     *          @OA\Schema(type="string", example="9b9c99f2a2a72e89c577f4b4cf17f9f3"
+     *          )
+     *     ),
+     *
+     *     @OA\Response(response="200", description="Хеш",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="data", type="boolean", description="Хеш совпал или нет", example=true),
+     *              @OA\Property(property="success", title="Success", example=true),
+     *         ),
+     *     ),
+     *     @OA\Response(response="400", description="Error", @OA\JsonContent(ref="#/components/schemas/ErrorResponse")),
+     * )
+     */
+    public function checkHash($key, $hash)
+    {
+        try {
+            /** @var $model Hash */
+            $model = $this->repo->getBy('key', $key, true);
+
+            return self::successJsonMessage($model->hash === $hash);
+        } catch (\Throwable $e){
+            return self::errorJsonMessage($e->getMessage(), $e->getCode());
+        }
+    }
 }
 
 
